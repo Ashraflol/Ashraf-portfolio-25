@@ -619,28 +619,24 @@
   <script>
   const form = document.getElementById('contact-form');
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
+  const formData = new FormData(form);
 
-    try {
-      const response = await fetch('https://script.google.com/macros/s/AKfycbwnLM_IQzloLhZd0DXKTS3w8j-1PXUsccus3qNeDgx7kCWe4iPdw1Q943W-Scu9YPER/exec', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+  try {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbwnLM_IQzloLhZd0DXKTS3w8j-1PXUsccus3qNeDgx7kCWe4iPdw1Q943W-Scu9YPER/exec', {
+      method: 'POST',
+      body: formData
+    });
 
-      const result = await response.json();
-      alert("Submitted successfully!");
-    } catch (error) {
-      console.error('Error!', error.message);
-      alert("There was an error.");
-    }
-  });
+    const text = await response.text(); // Apps Script returns plain text
+    alert("Submitted successfully!");
+  } catch (err) {
+    console.error(err);
+    alert("Submission failed.");
+  }
+});
 </script>
 
   <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
